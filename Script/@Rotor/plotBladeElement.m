@@ -26,8 +26,7 @@ radius = obj.Geometry.ROTOR_RADIUS;
 chord = obj.Geometry.BLADE_CHORD;
 twistdeg = zeros(length(obj.Geometry.WingPlanform),2);
 rBlade = obj.Geometry.rBlade;
-azimuth = obj.BET.azimuth;
-dL = obj.BET.dL; % dL(R,Azi)
+azimuth = obj.Geometry.azimuth;
 
 for i = 1 : length(twistdeg)
     twistdeg(i,1) = obj.Geometry.WingPlanform(i).body_incidence;
@@ -35,14 +34,17 @@ for i = 1 : length(twistdeg)
 end
 
 % Plot Main Rotor Lift Distribution
-% Extend Data
-dL(:,end+1) = dL(:,1);
-azimuth(end+1) = 2*azimuth(end) - azimuth(end-1); 
-[theta, rho] = meshgrid(azimuth*pi/180, rBlade);
-[X, Y] = pol2cart(theta, rho);
+try
+    % Extend Data
+    dL(:,end+1) = dL(:,1);
+    azimuth(end+1) = 2*azimuth(end) - azimuth(end-1);
+    [theta, rho] = meshgrid(azimuth*pi/180, rBlade);
+    [X, Y] = pol2cart(theta, rho);
+catch end
 
 figure('WindowState','maximized');
 
+try
 % dL
 subplot(3,4,[1,2,5,6]);
 % Draw rotor blades over lift distribution
@@ -55,10 +57,12 @@ yticks([]);
 colorbar;
 % cmp =[ones(50,1) linspace(0.8,0.25,50)'.*ones(50,2)];
 colormap(winter);
+catch end
 
 % Twist distribution
 subplot(3,4,[4,8]);
 hold on;
+try
 % Upper Blade
 plot(twistdeg(:,1)*180/pi,twistdeg(:,2),'k');
 % Lower Blade
@@ -67,11 +71,13 @@ ylabel('R [m]');
 xlabel('\theta_{twist} [^o]');
 ylim([-radius(end) radius(end)]);
 grid minor;
+catch end
 hold off
 
 % % Blade-Lift Distribution
 subplot(3,4,[3,7]);
 hold on;
+try
 [~,iMin] = min(dL(end,:));
 [~,iMax] = max(dL(end,:));
 plot(dL(:,iMin),rBlade,'k');
@@ -80,15 +86,17 @@ xlabel('L/r @90^o [N/m]');
 ylabel('R [m]')
 ylim([-radius(end) radius(end)]);
 grid minor;
+catch end
 hold off;
 
 % Blade planform
 subplot(3,4,[9,10,11]);
 hold on;
+try
 uB(1,:) = [zeros(1,length(radius)) -flip(-chord)];
 uB(2,:) = [radius flip(radius)];
 lB = [-uB(1,:);
-      -uB(2,:)];
+    -uB(2,:)];
 fill(uB(2,:),uB(1,:),[230 230 230]/255);
 fill(lB(2,:),lB(1,:),[230 230 230]/255);
 axis equal;
@@ -96,11 +104,13 @@ ylabel('c [m]');
 xlabel('R [m]');
 xlim([-radius(end) radius(end)]);
 ylim([-max(chord)*1.1 max(chord)*1.1]);
+catch end
 hold off;
 
 % Blade Data Text Box
 subplot(3,4,12);
 hold on;
+try
 box on;
 xlim([-10 10]);
 xticks([]);
@@ -117,6 +127,7 @@ text(-7,-6.6,strcat('C_P=',string(obj.BET.CP)));
 text(6,-6,'[-]');
 text(-7,-8.5,strcat('FoM=',string(obj.BET.FigureMerit)));
 text(6,-8.5,'[-]');
+catch end
 hold off;
 end
 

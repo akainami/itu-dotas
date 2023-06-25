@@ -25,9 +25,7 @@ classdef Rotor < handle
     properties
         Component
         Desired
-        BET
         BEMT
-        BSM
         Geometry
     end
     methods

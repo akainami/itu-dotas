@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 %}
 
-clc; clear; close; tic
+clc; clear all; close; tic
 % =====  DOTAS-LXIII  =====
 % The scripts were initially designed for aerospace competitions
 % of T3 Teknofest 2022 by our group of ITU DOTAS. Since the work 
@@ -40,25 +40,23 @@ DOTAS.init;
 
     % Control Inputs
 Control.Collective = 0; % Deg
-Control.CyclicLat  = 1; % Deg
+Control.CyclicLat  = 0; % Deg
 Control.CyclicLong = 0; % Deg
 Control.AntiTorque = 0; % Deg
-Speed.X = 80; % Forward, m/s
+Speed.X = 0; % Forward, m/s
 Speed.Y = 0; % Lateral, m/s
 Speed.Z = 0; % Climb, m/s
 
     % Calculate
 DOTAS.ISA.init(0,0); % Altitude, deltaT
-DOTAS.MainRotor.bladeElement(DOTAS.ISA, Speed, Control);
-DOTAS.TailRotor.bladeElement(DOTAS.ISA, Speed, Control);
 
 % DOTAS.MainRotor.Trim % Roll/CyclicLat & AntiTorque Trim
 DOTAS.weightIter;
 DOTAS.costFunction;
 
     % Plot
-DOTAS.plotWeightBreakdown;
+% DOTAS.plotWeightBreakdown;
 DOTAS.MainRotor.plotBladeElement;
-DOTAS.TailRotor.plotBladeElement;
+% DOTAS.TailRotor.plotBladeElement;
 
 toc

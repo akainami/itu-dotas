@@ -26,10 +26,10 @@ function createPlanform(obj)
 RCell = obj.Geometry.ROTOR_RADIUS;
 ThetaCell = obj.Geometry.BODY_INCIDENCE;
 cCell = obj.Geometry.BLADE_CHORD;
-% bCell = obj.Geometry.SPAN;
-% TaperCell = obj.Geometry.TAPER_RATE;
-% TwistCell = obj.Geometry.TWIST_RATE;
-% SweepCell = obj.Geometry.SWEEP_RATE;
+bCell = obj.Geometry.SPAN;
+TaperCell = obj.Geometry.TAPER_RATE;
+TwistCell = obj.Geometry.TWIST_RATE;
+SweepCell = obj.Geometry.SWEEP_RATE;
 Rtip = obj.Geometry.ROTOR_RADIUS_TIP;
 n = obj.Geometry.rStations;
 
