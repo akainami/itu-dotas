@@ -39,8 +39,6 @@ classdef Rotor < handle
         end
         function createStr(obj)
             obj.BEMT = struct;
-            obj.BET = struct;
-            obj.BSM = struct;
             obj.Desired = struct;
             obj.Geometry = struct;
         end
